@@ -20,6 +20,8 @@
     NSURL *url;
     GMSMarker *userCreatedMarker;
     NSString *baseURL;
+    GMSPolyline *polyline;
+    GMSPath *thePath;
     
     
 }
@@ -42,7 +44,7 @@
     markerSession = [NSURLSession sessionWithConfiguration:config];
     
     //Setting up the google map
-    GMSCameraPosition *theCamera = [GMSCameraPosition cameraWithLatitude:38.909649 longitude:-77.043442 zoom:17 bearing:0 viewingAngle:0];
+    GMSCameraPosition *theCamera = [GMSCameraPosition cameraWithLatitude:38.909649 longitude:-77.043442 zoom:5 bearing:0 viewingAngle:0];
     self.mapView = [GMSMapView mapWithFrame:self.view.bounds camera:theCamera];
     self.mapView.mapType = kGMSTypeNormal;
     self.mapView.myLocationEnabled = YES;
@@ -77,29 +79,53 @@
     for (NSArray *markerData in json) {
         
         if (![markerData isEqual:@"status"]) {
-        GMSMarker *newMarker = [[GMSMarker alloc]init];
+            GMSMarker *startPointMarker = [[GMSMarker alloc]init];
+            GMSMarker *endPointMarker = [[GMSMarker alloc] init];
 
         NSArray *routes = [json objectForKey:@"routes"];
         
             //Using this loop to get rid of some error that i was facing
             for (NSDictionary *theRoutes in routes) {
-                NSDictionary *legs = theRoutes [@"legs"];
-                NSArray *toFindLatAndLng = [NSArray arrayWithObject:legs];
-                NSLog(@"Legs : %@", legs);
-        
-                NSDictionary *end_location = [toFindLatAndLng objectAtIndex:0];
-                double latitude = [end_location[@"lat"] doubleValue];
-                double longitude = [end_location[@"lng"] doubleValue];
+                NSArray *legs = theRoutes [@"legs"];
             
-                CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(latitude, longitude);
+                //Getting the starting point
+                NSDictionary *startPoint = [legs objectAtIndex:0];
+                NSDictionary *start_location = [startPoint objectForKey:@"start_location"];
+                double latitude1 = [start_location[@"lat"] doubleValue];
+                double longitude1 = [start_location[@"lng"] doubleValue];
+                
+                //Getting the enp point
+                NSDictionary *end_location = [startPoint objectForKey:@"end_location"];
+                double latitude2 = [end_location[@"lat"] doubleValue];
+                double longitude2 = [end_location[@"lng"] doubleValue];
+                NSArray *steps = [startPoint objectForKey:@"steps"];
+                polyline.map = nil;
+                //I got the html instructions here in this step
+                for (int i = 0; i < steps.count; i++) {
+                    NSDictionary *instructions = [steps objectAtIndex:i];
+                    NSDictionary *routeOverviewPolyline = [instructions objectForKey:@"polyline"];
+                    NSString *points = [routeOverviewPolyline objectForKey:@"points"];
+                    thePath = [GMSPath pathFromEncodedPath:points];
+                    [self drawPolyline:thePath];
+            
+                }
+            
+                //Drawing the points on the map
+                CLLocationCoordinate2D coordinate1 = CLLocationCoordinate2DMake(latitude1, longitude1);
+                CLLocationCoordinate2D coordinate2 = CLLocationCoordinate2DMake(latitude2, longitude2);
+            
+                startPointMarker.position = coordinate1;
+                startPointMarker.snippet = @"snippet";
+                startPointMarker.title = [startPoint objectForKey:@"start_address"];
+                startPointMarker.map = nil;
+                [mutableSet addObject:startPointMarker];
+                
+                endPointMarker.position = coordinate2;
+                endPointMarker.snippet = @"snippet";
+                endPointMarker.title = [startPoint objectForKey:@"end_address"];
+                endPointMarker.map = nil;
+                [mutableSet addObject:endPointMarker];
 
-                //Passing double values here bacause the json is returning a string and the position property here is expections a double value
-                newMarker.position = coordinate;
-        
-                newMarker.title = [legs objectForKey:@"end_address"];
-                newMarker.snippet = @"snippet";
-                newMarker.map = nil;
-                [mutableSet addObject:newMarker];
         }
         }
     }
@@ -129,7 +155,8 @@
             [self.mapView animateWithCameraUpdate:cameraUpdate];
         }
     }
-}
+    
+    }
 
 - (BOOL)prefersStatusBarHidden
 {
@@ -164,11 +191,13 @@
 }
 
 
-- (void)didReceiveMemoryWarning
+- (void)drawPolyline:(GMSPath *)path
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    polyline = [GMSPolyline polylineWithPath:path];
+    polyline.strokeColor = [UIColor blueColor];
+    polyline.strokeWidth = 10.f;
+    
+    polyline.map = self.mapView;
 }
-
 
 @end
