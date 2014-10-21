@@ -18,8 +18,9 @@
 //Making sure the markers are drawn only once and not many times to save memory
 - (void)drawMarker
 {
-    gMapVc = [[GMapViewController init] alloc];
-    for (GMSMarker *marker in gMapVc.markerSet) {
+    gMapVc = [[GMapViewController init]alloc];
+    
+    for (GMSMarker *marker in self.theNewMarkerSet) {
         if (marker.map == nil) {
             marker.appearAnimation = kGMSMarkerAnimationPop;
             marker.map = gMapVc.mapView;
@@ -74,7 +75,7 @@
 
 - (void)drawPolyline:(GMSPath *)path
 {
-    DataHandler *dataForPolyline = [[DataHandler init] alloc];
+    DataHandler *dataForPolyline;
     dataForPolyline.polyline = [GMSPolyline polylineWithPath:path];
     dataForPolyline.polyline.strokeColor = [UIColor blueColor];
     dataForPolyline.polyline.strokeWidth = 10.f;

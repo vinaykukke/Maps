@@ -9,6 +9,12 @@
 #import "DataHandler.h"
 
 @interface DataHandler ()
+{
+    GMSMarker *marker1;
+    GMSMarker *marker2;
+    GMSMarker *marker3;
+    GMSMarker *marker4;
+}
 
 @end
 
@@ -16,9 +22,10 @@
 
 - (void)createMarkerObjectWithJson:(NSDictionary *)json
 {
-    gMapVc = [[GMapViewController init] alloc];
-    NSMutableSet *mutableSet = [[NSMutableSet alloc] initWithSet:gMapVc.markerSet];
+    NSMutableSet *mutableSet = [[NSMutableSet alloc] initWithSet:self.markerSet];
     DrawMarker *draw = [[DrawMarker init] alloc];
+    //Making markers
+    self.markerSet = [ NSSet setWithObjects:marker1, marker2, marker3, marker4, nil];
     for (NSArray *markerData in json) {
         
         if (![markerData isEqual:@"status"]) {
@@ -74,7 +81,7 @@
     }
     
     //Making an immutable copy of the mutable set
-    gMapVc.markerSet = [mutableSet copy];
+    draw.theNewMarkerSet = [mutableSet copy];
     [draw drawMarker];
 }
 

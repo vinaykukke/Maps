@@ -11,9 +11,12 @@
 #import "DataHandler.h"
 
 @interface GMapViewController : UIViewController <GMSMapViewDelegate>
+{
+    DataHandler *dataHandler;
+}
 
 @property (nonatomic, strong) NSString *fromAddressString;
 @property (nonatomic, strong) NSString *toAddressString;
 @property (strong, nonatomic) GMSMapView *mapView;
-@property (nonatomic,strong) NSSet *markerSet;
+
 @end

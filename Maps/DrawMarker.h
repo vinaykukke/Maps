@@ -7,12 +7,15 @@
 //
 
 #import "GMapViewController.h"
+#import "DataHandler.h"
 
 @interface DrawMarker: NSObject
 {
     GMSMarker *userCreatedMarker;
     GMapViewController *gMapVc;
 }
+
+@property (nonatomic, strong) NSSet *theNewMarkerSet;
 
 - (void)drawMarker;
 - (void)mapView:(GMSMapView *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate;
