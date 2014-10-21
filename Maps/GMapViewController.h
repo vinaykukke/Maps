@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <GoogleMaps/GoogleMaps.h>
+#import "DataHandler.h"
 
-@interface GMapViewController : UIViewController
+@interface GMapViewController : UIViewController <GMSMapViewDelegate>
 
 @property (nonatomic, strong) NSString *fromAddressString;
 @property (nonatomic, strong) NSString *toAddressString;
-
+@property (strong, nonatomic) GMSMapView *mapView;
+@property (nonatomic,strong) NSSet *markerSet;
 @end
