@@ -25,19 +25,21 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-
+    dataHandler = [[DataHandler alloc] init];
+    
     //Setting up a URL session
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     markerSession = [NSURLSession sessionWithConfiguration:config];
     
     //Setting up the google map
+    
     GMSCameraPosition *theCamera = [GMSCameraPosition cameraWithLatitude:38.909649 longitude:-77.043442 zoom:5 bearing:0 viewingAngle:0];
-    self.mapView = [GMSMapView mapWithFrame:self.view.bounds camera:theCamera];
-    self.mapView.mapType = kGMSTypeNormal;
-    self.mapView.myLocationEnabled = YES;
-    self.mapView.settings.compassButton = YES;
-    self.mapView.settings.myLocationButton = YES;
-    [self.view addSubview:self.mapView];
+    dataHandler.mapView = [GMSMapView mapWithFrame:self.view.bounds camera:theCamera];
+    dataHandler.mapView.mapType = kGMSTypeNormal;
+    dataHandler.mapView.myLocationEnabled = YES;
+    dataHandler.mapView.settings.compassButton = YES;
+    dataHandler.mapView.settings.myLocationButton = YES;
+    [self.view addSubview:dataHandler.mapView];
     
     
     //This will take the two locations that need to be searched
@@ -46,17 +48,14 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     //Making sure that the call to google maps SDK is made on the main thread
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        // NSURLSessionDataTask *task = [markerSession dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error){
+        
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
         
-        dataHandler = [[DataHandler init] alloc];
         [dataHandler createMarkerObjectWithJson:json];
+        
     }];
     
 }
-
-
-
 
 
 @end

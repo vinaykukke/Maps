@@ -20,10 +20,17 @@
 
 @implementation DataHandler
 
+- (id)init {
+    self = [super init];
+    if (self) {
+        // Initialize self.
+    }
+    return self;
+}
+
 - (void)createMarkerObjectWithJson:(NSDictionary *)json
 {
     NSMutableSet *mutableSet = [[NSMutableSet alloc] initWithSet:self.markerSet];
-    DrawMarker *draw = [[DrawMarker init] alloc];
     //Making markers
     self.markerSet = [ NSSet setWithObjects:marker1, marker2, marker3, marker4, nil];
     for (NSArray *markerData in json) {
@@ -50,13 +57,14 @@
                 double longitude2 = [end_location[@"lng"] doubleValue];
                 NSArray *steps = [startPoint objectForKey:@"steps"];
                 self.polyline.map = nil;
+                
                 //I got the html instructions here in this step
                 for (int i = 0; i < steps.count; i++) {
                     NSDictionary *instructions = [steps objectAtIndex:i];
                     NSDictionary *routeOverviewPolyline = [instructions objectForKey:@"polyline"];
                     NSString *points = [routeOverviewPolyline objectForKey:@"points"];
                     thePath = [GMSPath pathFromEncodedPath:points];
-                    [draw drawPolyline:thePath];
+                    [self drawPolyline:thePath];
                     
                 }
                 
@@ -81,9 +89,78 @@
     }
     
     //Making an immutable copy of the mutable set
-    draw.theNewMarkerSet = [mutableSet copy];
-    [draw drawMarker];
+    //When you use copy here it means that you are taking ownership of the object
+    self.markerSet = [mutableSet copy];
+    [self drawMarker];
 }
+
+//Making sure the markers are drawn only once and not many times to save memory
+- (void)drawMarker
+{
+    
+    for (GMSMarker *marker in self.markerSet) {
+        if (marker.map == nil) {
+            marker.appearAnimation = kGMSMarkerAnimationPop;
+            marker.map = self.mapView;
+        }
+        
+        if (userCreatedMarker != nil && userCreatedMarker.map == nil) {
+            userCreatedMarker.map = self.mapView;
+            
+            //Opens the info window directly when the marker is made, no need to tap on it
+            self.mapView.selectedMarker = userCreatedMarker;
+            
+            //To recenter the map on the user created marker
+            GMSCameraUpdate *cameraUpdate = [GMSCameraUpdate setTarget:userCreatedMarker.position];
+            [self.mapView animateWithCameraUpdate:cameraUpdate];
+        }
+    }
+    
+}
+
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
+    
+}
+
+- (void)mapView:(GMSMapView *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate
+{
+    //to prevent more than one user created marker to be on the map
+    if (userCreatedMarker != nil) {
+        userCreatedMarker.map = nil;
+        userCreatedMarker = nil;
+    }
+    
+    GMSGeocoder *geocoder = [GMSGeocoder geocoder];
+    [geocoder reverseGeocodeCoordinate:coordinate completionHandler:^(GMSReverseGeocodeResponse *response, NSError *error){
+        GMSMarker *marker = [[GMSMarker alloc]init];
+        marker.position = coordinate;
+        marker.appearAnimation = kGMSMarkerAnimationPop;
+        marker.map = nil;
+        
+        //This will give you the street adderss
+        marker.title = response.firstResult.thoroughfare;
+        //This will give you the name of the city
+        marker.snippet = response.firstResult.locality;
+        userCreatedMarker = marker;
+        [self drawMarker];
+        
+    }];
+    
+}
+
+
+- (void)drawPolyline:(GMSPath *)path
+{
+    self.polyline = [GMSPolyline polylineWithPath:path];
+    self.polyline.strokeColor = [UIColor blueColor];
+    self.polyline.strokeWidth = 10.f;
+    
+    self.polyline.map = self.mapView;
+}
+
+
 
 
 @end

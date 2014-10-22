@@ -10,7 +10,6 @@
 		6A58EE0119BA517200305645 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A58EE0019BA517200305645 /* MapKit.framework */; };
 		6A58EE0719BA6F6800305645 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A58EE0619BA6F6800305645 /* FirstViewController.m */; };
 		6AC468E819F62C42003B49B7 /* DataHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC468E719F62C42003B49B7 /* DataHandler.m */; };
-		6AC468EB19F63C09003B49B7 /* DrawMarker.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC468EA19F63C09003B49B7 /* DrawMarker.m */; };
 		6AE7264719B6981A001BFF52 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AE7264619B6981A001BFF52 /* Foundation.framework */; };
 		6AE7264919B6981A001BFF52 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AE7264819B6981A001BFF52 /* CoreGraphics.framework */; };
 		6AE7264B19B6981A001BFF52 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AE7264A19B6981A001BFF52 /* UIKit.framework */; };
@@ -56,8 +55,6 @@
 		6A58EE0619BA6F6800305645 /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
 		6AC468E619F62C42003B49B7 /* DataHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataHandler.h; sourceTree = "<group>"; };
 		6AC468E719F62C42003B49B7 /* DataHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataHandler.m; sourceTree = "<group>"; };
-		6AC468E919F63C09003B49B7 /* DrawMarker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawMarker.h; sourceTree = "<group>"; };
-		6AC468EA19F63C09003B49B7 /* DrawMarker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawMarker.m; sourceTree = "<group>"; };
 		6AE7264319B6981A001BFF52 /* Maps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Maps.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6AE7264619B6981A001BFF52 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6AE7264819B6981A001BFF52 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -186,8 +183,6 @@
 				6AE7269B19B69C7B001BFF52 /* GMapViewController.m */,
 				6AC468E619F62C42003B49B7 /* DataHandler.h */,
 				6AC468E719F62C42003B49B7 /* DataHandler.m */,
-				6AC468E919F63C09003B49B7 /* DrawMarker.h */,
-				6AC468EA19F63C09003B49B7 /* DrawMarker.m */,
 				6AE7265E19B6981B001BFF52 /* Images.xcassets */,
 				6AE7264D19B6981A001BFF52 /* Supporting Files */,
 			);
@@ -323,7 +318,6 @@
 				6AC468E819F62C42003B49B7 /* DataHandler.m in Sources */,
 				6AE7265719B6981B001BFF52 /* AppDelegate.m in Sources */,
 				6AE7265319B6981A001BFF52 /* main.m in Sources */,
-				6AC468EB19F63C09003B49B7 /* DrawMarker.m in Sources */,
 				6AE7269C19B69C7B001BFF52 /* GMapViewController.m in Sources */,
 				6A58EE0719BA6F6800305645 /* FirstViewController.m in Sources */,
 			);

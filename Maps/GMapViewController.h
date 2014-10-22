@@ -13,10 +13,11 @@
 @interface GMapViewController : UIViewController <GMSMapViewDelegate>
 {
     DataHandler *dataHandler;
+    GMSMarker *userCreatedMarker;
 }
 
 @property (nonatomic, strong) NSString *fromAddressString;
 @property (nonatomic, strong) NSString *toAddressString;
-@property (strong, nonatomic) GMSMapView *mapView;
+
 
 @end
