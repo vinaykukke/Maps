@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GoogleResponseClass.h"
 
-@interface FirstViewController : UIViewController
+@interface FirstViewController : UIViewController<GoogleResponseClassCallBacks>
 
 @property (nonatomic, strong) UITextField *fromAddress;
 @property (nonatomic, strong) UITextField *toAddress;

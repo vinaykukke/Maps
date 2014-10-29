@@ -14,10 +14,9 @@
 {
     DataHandler *dataHandler;
     GMSMarker *userCreatedMarker;
+    NSDictionary *googleResposeData;
 }
 
-@property (nonatomic, strong) NSString *fromAddressString;
-@property (nonatomic, strong) NSString *toAddressString;
-
+- (id) initWithGoogleData: (NSDictionary *)googleData;
 
 @end

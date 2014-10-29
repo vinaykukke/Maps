@@ -7,16 +7,20 @@
 //
 
 #import <GoogleMaps/GoogleMaps.h>
+#import "Turns.h"
 
 @interface DataHandler : NSObject
 {
-    GMSPath *thePath;
     GMSMarker *userCreatedMarker;
+    NSMutableArray* allTurns;
 }
-
+@property(nonatomic , retain) NSMutableArray* allTurns;
 @property (nonatomic, strong) GMSPolyline *polyline;
 @property (nonatomic,strong) NSSet *markerSet;
 @property (strong, nonatomic) GMSMapView *mapView;
+@property (nonatomic, strong) GMSPath *thePath;
+@property (nonatomic, strong) NSMutableArray *thePathArray;
+@property (nonatomic, strong) NSString *points;
 
 - (void)createMarkerObjectWithJson:(NSDictionary *)json;
 - (void)drawMarker;

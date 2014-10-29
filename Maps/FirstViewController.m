@@ -9,10 +9,12 @@
 #import "FirstViewController.h"
 #import "GMapViewController.h"
 
+
 @interface FirstViewController ()
 {
     UIButton *goButton;
     GMapViewController *gMapVC;
+    GoogleResponseClass *gRespones;
 }
 
 @end
@@ -24,39 +26,51 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    gMapVC = [[GMapViewController alloc] init];
+    gRespones = [GoogleResponseClass sharedInstance];
     
+    //Making sure this is the class that has to follow the delegate
+    gRespones.delegate = self;
     self.view.backgroundColor = [UIColor blackColor];
     
+    //From Address textfield
     _fromAddress = [[UITextField alloc] initWithFrame:CGRectMake(30, 80, 200, 40)];
     _fromAddress.backgroundColor = [UIColor whiteColor];
+    [_fromAddress setBorderStyle:UITextBorderStyleRoundedRect];
+    [_fromAddress setPlaceholder:@"From"];
+    
+    //To address text field
     _toAddress = [[UITextField alloc] initWithFrame:CGRectMake(30, 130, 200, 40)];
     _toAddress.backgroundColor = [UIColor whiteColor];
-    goButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [_fromAddress setBorderStyle:UITextBorderStyleRoundedRect];
     [_toAddress setBorderStyle:UITextBorderStyleRoundedRect];
+    [_toAddress setPlaceholder:@"To"];
+    
+    //Go Button
+    goButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     goButton.frame = CGRectMake(250, 100, 40, 40);
     [goButton setTitle:@"GO" forState:UIControlStateNormal];
     goButton.backgroundColor = [UIColor blueColor];
-    [_fromAddress setPlaceholder:@"From"];
-    [_toAddress setPlaceholder:@"To"];
+    
     
     [self.view addSubview:_fromAddress];
     [self.view addSubview:_toAddress];
     [self.view addSubview:goButton];
     
+    //Adding action to UIButton
     [goButton addTarget:self action:@selector(goToGoogleMaps) forControlEvents:UIControlEventTouchDown];
     
 }
 
+- (void)didGetResponse:(NSDictionary *)_response
+{
+    gMapVC = [[GMapViewController alloc] initWithGoogleData:_response];
+    [self.navigationController pushViewController:gMapVC animated:YES];
+    
+}
 
 - (void)goToGoogleMaps
 {
-    gMapVC.fromAddressString = _fromAddress.text;
-    gMapVC.toAddressString = _toAddress.text;
-    
-    [self.navigationController pushViewController:gMapVC animated:YES];
-    
+    [gRespones requestResponseForFromAddress:_fromAddress.text andToAddress:_toAddress.text];
+   
 }
 
 @end
