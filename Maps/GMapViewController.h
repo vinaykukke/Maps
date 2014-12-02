@@ -11,6 +11,8 @@
 #import "CityTableView.h"
 #import "GoogleResponseClass.h"
 #import "DataHandler.h"
+#import "TrunsTableView.h"
+
 
 /*typedef struct{
     
@@ -30,7 +32,7 @@
     CityTableView *myTableView;
     DataHandler *dataHandler;
     GoogleResponseClass *googleResponse;
-
+    TrunsTableView *turnsTableView;
     
 }
 

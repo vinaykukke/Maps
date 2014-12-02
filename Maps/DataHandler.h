@@ -13,15 +13,16 @@
 @interface DataHandler : NSObject
 {
     GMSMarker *userCreatedMarker;
-    NSMutableArray* allTurns;
+    Turns *turnAndPolylinesData;
 }
-@property(nonatomic , retain) NSMutableArray* allTurns;
+
 @property (nonatomic, strong) GMSPolyline *polyline;
 @property (nonatomic,strong) NSSet *markerSet;
 @property (strong, nonatomic) GMSMapView *mapView;
 @property (nonatomic, strong) GMSPath *thePath;
 @property (nonatomic, strong) NSMutableArray *thePathArray;
 @property (nonatomic, strong) NSString *points;
+@property (nonatomic , retain) NSMutableArray* allHtmlTrunByTurnInstructions;
 
 - (void)createMarkerObjectWithJson:(NSDictionary *)json;
 - (void)drawMarker;

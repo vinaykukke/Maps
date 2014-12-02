@@ -13,6 +13,7 @@
 		6AC7D90219F9063C006BC959 /* Turns.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC7D90119F9063C006BC959 /* Turns.m */; };
 		6AC7D9111A0502A6006BC959 /* Cities.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC7D9101A0502A6006BC959 /* Cities.m */; };
 		6AC7D9141A062167006BC959 /* CityTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC7D9131A062167006BC959 /* CityTableView.m */; };
+		6AC7D9171A08FC6E006BC959 /* TrunsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AC7D9161A08FC6E006BC959 /* TrunsTableView.m */; };
 		6AE7264719B6981A001BFF52 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AE7264619B6981A001BFF52 /* Foundation.framework */; };
 		6AE7264919B6981A001BFF52 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AE7264819B6981A001BFF52 /* CoreGraphics.framework */; };
 		6AE7264B19B6981A001BFF52 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AE7264A19B6981A001BFF52 /* UIKit.framework */; };
@@ -64,6 +65,8 @@
 		6AC7D9101A0502A6006BC959 /* Cities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cities.m; sourceTree = "<group>"; };
 		6AC7D9121A062167006BC959 /* CityTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityTableView.h; sourceTree = "<group>"; };
 		6AC7D9131A062167006BC959 /* CityTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityTableView.m; sourceTree = "<group>"; };
+		6AC7D9151A08FC6E006BC959 /* TrunsTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrunsTableView.h; sourceTree = "<group>"; };
+		6AC7D9161A08FC6E006BC959 /* TrunsTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrunsTableView.m; sourceTree = "<group>"; };
 		6AE7264319B6981A001BFF52 /* Maps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Maps.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6AE7264619B6981A001BFF52 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6AE7264819B6981A001BFF52 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -198,6 +201,8 @@
 				6AC468E719F62C42003B49B7 /* DataHandler.m */,
 				6AC7D90019F9063C006BC959 /* Turns.h */,
 				6AC7D90119F9063C006BC959 /* Turns.m */,
+				6AC7D9151A08FC6E006BC959 /* TrunsTableView.h */,
+				6AC7D9161A08FC6E006BC959 /* TrunsTableView.m */,
 				6AE7265E19B6981B001BFF52 /* Images.xcassets */,
 				6AE7264D19B6981A001BFF52 /* Supporting Files */,
 			);
@@ -335,6 +340,7 @@
 				6AE7265719B6981B001BFF52 /* AppDelegate.m in Sources */,
 				6AC7D8FF19F8EE45006BC959 /* GoogleResponseClass.m in Sources */,
 				6AC7D90219F9063C006BC959 /* Turns.m in Sources */,
+				6AC7D9171A08FC6E006BC959 /* TrunsTableView.m in Sources */,
 				6AE7265319B6981A001BFF52 /* main.m in Sources */,
 				6AC7D9111A0502A6006BC959 /* Cities.m in Sources */,
 				6AE7269C19B69C7B001BFF52 /* GMapViewController.m in Sources */,

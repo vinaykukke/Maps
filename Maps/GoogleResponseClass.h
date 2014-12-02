@@ -17,6 +17,7 @@
 @interface GoogleResponseClass : NSObject{
     __unsafe_unretained id delegate;
 }
+
 @property (nonatomic , assign)id delegate;
 @property (nonatomic, strong) NSString *fromAddressString;
 @property (nonatomic, strong) NSString *toAddressString;

@@ -40,6 +40,10 @@
     dataHandler.mapView.myLocationEnabled = YES;
     dataHandler.mapView.settings.compassButton = YES;
     dataHandler.mapView.settings.myLocationButton = YES;
+    
+    //adding button to mapview
+    
+    
     [self.view addSubview:dataHandler.mapView];
     [self.view addSubview:_searchBarOne];
     
@@ -48,7 +52,7 @@
 - (void) searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 
 {
-    //If search bar two has not been created then create it
+    //If searchBarTwo has not been created, then create it
     if(!_searchBarTwo){
         _searchBarTwo = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 105, screenBounds.size.width, 40)];
         _searchBarTwo.delegate = self;
@@ -56,7 +60,7 @@
 
     }
     
-    //If tableview has not been created then create it
+    //If tableview has not been created, then create it
     if(!myTableView){
         myTableView = [[CityTableView alloc] initWithFrame:CGRectMake(0, 145, screenBounds.size.width, screenBounds.size.height)  style:UITableViewStylePlain];
 
@@ -89,16 +93,33 @@
     //Adding the mapView as subview
     [self.view addSubview:dataHandler.mapView];
     
+    //creating the marker objects to be displayed on the map
     [dataHandler createMarkerObjectWithJson:googleResposeData];
     
+    //going through the path array to get all the encoded string paths provided by google and usign that to draw polyline on the map.
     for (NSString *path in dataHandler.thePathArray) {
      dataHandler.thePath = [GMSPath pathFromEncodedPath:path];
      [dataHandler drawPolyline:dataHandler.thePath];
      
      }
-     
+     //drawing the markers/adding the marker objects to the mapView.
      [dataHandler drawMarker];
+    
+    UIBarButtonItem *turnsButton = [[UIBarButtonItem alloc] initWithTitle:@"Start" style:UIBarButtonItemStylePlain target:self action:@selector(loadTurnsTableView)];
+    self.navigationItem.rightBarButtonItem = turnsButton;
 }
 
+-(void)loadTurnsTableView
+{
+    //if the tabeView has not been created then create it and remove the mapview from subview and add the tableview to subview.
+    if (!turnsTableView) {
+        turnsTableView = [[TrunsTableView alloc]initTheTableView];
+        [dataHandler.mapView removeFromSuperview];
+        [self.view addSubview:turnsTableView];
+        turnsTableView.delegate = turnsTableView;
+        turnsTableView.dataSource = turnsTableView.theArray;
+
+    }
+}
 
 @end

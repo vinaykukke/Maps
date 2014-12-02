@@ -27,25 +27,33 @@
 @end
 
 @implementation DataHandler
-@synthesize allTurns;
+@synthesize allHtmlTrunByTurnInstructions;
 
 - (void)createMarkerObjectWithJson:(NSDictionary *)json
 {
     NSMutableSet *mutableSet = [[NSMutableSet alloc] initWithSet:self.markerSet];
     //Making markers
     self.markerSet = [ NSSet setWithObjects:marker1, marker2, marker3, marker4, nil];
-    NSArray *objectForKey = [json objectForKey:@"routes"];
-
+    
+    //looking for key "routes" in the json dictionary
+    NSArray *theRoutesArray = [json objectForKey:@"routes"];
+    
+            //creating the two GMS markers that we need
             GMSMarker *startPointMarker = [[GMSMarker alloc]init];
             GMSMarker *endPointMarker = [[GMSMarker alloc] init];
+    
+            //Initializing the mutable array.
+            allHtmlTrunByTurnInstructions = [[NSMutableArray alloc]init];
+    
+            //Getting the points for coordinates and polylines
+            [self getPointsAndPolylines:theRoutesArray];
             
-            [self getPointsAndPolylines:objectForKey];
-            
-            //Drawing the points on the map
+            //Creating the coordinates
             CLLocationCoordinate2D coordinate1 = CLLocationCoordinate2DMake(latitude1, longitude1);
             CLLocationCoordinate2D coordinate2 = CLLocationCoordinate2DMake(latitude2, longitude2);
-            Turns *turnAndPolylinesData = [[Turns alloc]initWithFromCoordinate:coordinate1 andToCoordinate:coordinate2 andHTMLInstructions:htmlTurnByTurnInstructions];
-            
+            turnAndPolylinesData = [[Turns alloc]initWithArray:allHtmlTrunByTurnInstructions];
+    
+                //setting the properties for the markers
                 startPointMarker.position = coordinate1;
                 startPointMarker.snippet = @"snippet";
                 startPointMarker.title = [startPoint objectForKey:@"start_address"];
@@ -83,21 +91,25 @@
         NSArray *steps = [startPoint objectForKey:@"steps"];
         _polyline.map = nil;
         _thePathArray = [[NSMutableArray alloc] init];
-        //I got the html instructions here in this step
+    
+        //getting the HTML turn by turn instructions and the points for polyline information
         for (int i = 0; i < steps.count; i++) {
             NSDictionary *instructions = [steps objectAtIndex:i];
             htmlTurnByTurnInstructions = [instructions objectForKey:@"html_instructions"];
+            
+            //adding all the html string directions into an array so it can be used again
+            [allHtmlTrunByTurnInstructions addObject:htmlTurnByTurnInstructions];
             NSDictionary *routeOverviewPolyline = [instructions objectForKey:@"polyline"];
             _points = [routeOverviewPolyline objectForKey:@"points"];
             [_thePathArray addObject:_points];
-            
     }
+    
 }
 
-//Making sure the markers are drawn only once and not many times to save memory
+
 - (void)drawMarker
 {
-    
+    //setting the map property so that the google SDK can add the marker to the mapview
     for (GMSMarker *marker in self.markerSet) {
         if (marker.map == nil) {
             marker.appearAnimation = kGMSMarkerAnimationPop;
@@ -153,6 +165,7 @@
 
 - (void)drawPolyline:(GMSPath *)path
 {
+    //drawing the polylines and adding them to the mapview
     _polyline = [GMSPolyline polylineWithPath:path];
     _polyline.strokeColor = [UIColor blueColor];
     _polyline.strokeWidth = 10.f;

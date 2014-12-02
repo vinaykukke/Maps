@@ -9,15 +9,14 @@
 #import "Turns.h"
 
 @implementation Turns
-@synthesize fromCoordinate;
-@synthesize toCoordinate;
-@synthesize htmlInstructions;
+@synthesize htmlInstructionsArray;
+@synthesize arrayCount;
 
--(id)initWithFromCoordinate:(CLLocationCoordinate2D)_fromCoordinate andToCoordinate:(CLLocationCoordinate2D)_toCoordinate andHTMLInstructions:(NSString *)_htmlInstructions{
-    if(self = [super init]){
-        self.fromCoordinate = _fromCoordinate;
-        self.toCoordinate = _toCoordinate;
-        self.htmlInstructions = _htmlInstructions;
+-(id)initWithArray:(NSArray *)_htmlInstructionsArray
+{
+    if (self = [super init]) {
+        self.htmlInstructionsArray = [_htmlInstructionsArray copy];
+        arrayCount = [self.htmlInstructionsArray count];
     }
     
     return self;

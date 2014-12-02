@@ -38,8 +38,10 @@ static GoogleResponseClass *instance = Nil;
             NSLog(@"The error is ****** %@", connectionError);
         }
         else{
+            //Serializing the JSON response from google
             retDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             
+            //passing the data so it can be accessed from the delegate method
             [self.delegate didGetResponse:retDictionary];
 
         }

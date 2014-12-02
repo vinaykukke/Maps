@@ -11,14 +11,12 @@
 
 @interface Turns : NSObject
 {
-    CLLocationCoordinate2D fromCoordinate;
-    CLLocationCoordinate2D toCoordinate;
-    NSString* htmlInstructions;
+    NSMutableArray *htmlInstructionsArray;
 }
-@property(nonatomic , retain)NSString* htmlInstructions;
-@property(nonatomic)CLLocationCoordinate2D fromCoordinate;
-@property(nonatomic)CLLocationCoordinate2D toCoordinate;
 
--(id)initWithFromCoordinate:(CLLocationCoordinate2D)_fromCoordinate andToCoordinate:(CLLocationCoordinate2D)_toCoordinate andHTMLInstructions:(NSString *)_htmlInstructions;
+@property (nonatomic, strong) NSArray *htmlInstructionsArray;
+@property (nonatomic) NSUInteger arrayCount;
+
+-(id)initWithArray:(NSArray *)_htmlInstructionsArray;
 
 @end
